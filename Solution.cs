@@ -7,17 +7,31 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public int MaxProfit(int[] prices)
+        public bool IsPalindrome(string s)
         {
-            int maxProfit = 0;
-            for (int i = 1; i < prices.Length; i++)
+            int left = 0;
+            int right = s.Length - 1;
+
+            s = s.ToLower();
+
+            while (left < right)
             {
-                if (prices[i] > prices[i - 1])
+                while (left < right && !char.IsLetterOrDigit(s[left]))
                 {
-                    maxProfit += prices[i] - prices[i - 1];
+                    left++;
                 }
+                while (left < right && !char.IsLetterOrDigit(s[right]))
+                {
+                    right--;
+                }
+                if (s[left] != s[right])
+                {
+                    return false;
+                }
+                left++;
+                right--;
             }
-            return maxProfit;
+            return true;
         }
     }
 }
