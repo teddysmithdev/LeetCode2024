@@ -7,31 +7,20 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public bool IsPalindrome(string s)
+        public int RemoveDuplicates(int[] nums)
         {
-            int left = 0;
-            int right = s.Length - 1;
+            if (nums.Length == 0) return 0;
 
-            s = s.ToLower();
-
-            while (left < right)
+            int uniqueIndex = 1;
+            for (int i = 1; i < nums.Length; i++)
             {
-                while (left < right && !char.IsLetterOrDigit(s[left]))
+                if (nums[i] != nums[i - 1])
                 {
-                    left++;
+                    nums[uniqueIndex] = nums[i];
+                    uniqueIndex++;
                 }
-                while (left < right && !char.IsLetterOrDigit(s[right]))
-                {
-                    right--;
-                }
-                if (s[left] != s[right])
-                {
-                    return false;
-                }
-                left++;
-                right--;
             }
-            return true;
+            return uniqueIndex;
         }
     }
 }
