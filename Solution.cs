@@ -7,20 +7,34 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public int RemoveDuplicates(int[] nums)
+        public bool IsValid(string s)
         {
-            if (nums.Length == 0) return 0;
-
-            int uniqueIndex = 1;
-            for (int i = 1; i < nums.Length; i++)
+            Dictionary<char, char> matches = new();
+            matches.Add('(', ')');
+            matches.Add('[', ']');
+            matches.Add('{', '}');
+            Stack<char> stack = new();
+            foreach (char c in s)
             {
-                if (nums[i] != nums[i - 1])
+                if (matches.ContainsKey(c))
                 {
-                    nums[uniqueIndex] = nums[i];
-                    uniqueIndex++;
+                    stack.Push(c);
+                }
+                else
+                {
+                    if (stack.Count == 0)
+                    {
+                        return false
+                        ;
+                    }
+                    char topElement = stack.Pop();
+                    if (matches[topElement] != c)
+                    {
+                        return false;
+                    }
                 }
             }
-            return uniqueIndex;
+            return stack.Count == 0;
         }
     }
 }
