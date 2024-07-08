@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -8,39 +9,20 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public IList<IList<string>> GroupAnagrams(string[] strs)
+        public string IntToRoman(int num)
         {
-            if (strs.Length == 0)
+            int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+            string[] symbols = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
+            StringBuilder roman = new();
+            for (int i = 0; i < values.Length && num > 0; i++)
             {
-                return new List<IList<string>>();
+                while (values[i] <= num)
+                {
+                    num -= values[i];
+                    roman.Append(symbols[i]);
+                }
             }
-
-            Dictionary<string, List<string>> anagrams = new();
-
-            foreach (string word in strs)
-            {
-                int[] count = new int[26];
-                foreach (char c in word)
-                {
-                    count[c - 'a']++;
-                }
-
-                StringBuilder sb = new();
-                for (int i = 0; i < 26; i++)
-                {
-                    sb.Append("#");
-                    sb.Append(count[i]);
-                }
-                string key = sb.ToString();
-
-                if (!anagrams.ContainsKey(key))
-                {
-                    anagrams[key] = new List<string>();
-                }
-
-                anagrams[key].Add(word);
-            }
-            return new List<IList<string>>(anagrams.Values);
+            return roman.ToString();
         }
     }
 }
