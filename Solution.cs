@@ -9,20 +9,26 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public string IntToRoman(int num)
+        public int MaxArea(int[] height)
         {
-            int[] values = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
-            string[] symbols = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", "X", "IX", "V", "IV", "I" };
-            StringBuilder roman = new();
-            for (int i = 0; i < values.Length && num > 0; i++)
+            int maxArea = 0;
+            int left = 0;
+            int right = height.Length - 1;
+
+            while (left < right)
             {
-                while (values[i] <= num)
+                int width = right - left;
+                maxArea = Math.Max(maxArea, Math.Min(height[left], height[right]) * width);
+                if (height[left] <= height[right])
                 {
-                    num -= values[i];
-                    roman.Append(symbols[i]);
+                    left++;
+                }
+                else
+                {
+                    right--;
                 }
             }
-            return roman.ToString();
+            return maxArea;
         }
     }
 }
