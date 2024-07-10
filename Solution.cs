@@ -9,26 +9,24 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public int MaxArea(int[] height)
+        public int MinSubArrayLen(int target, int[] nums)
         {
-            int maxArea = 0;
+            int minLength = int.MaxValue;
             int left = 0;
-            int right = height.Length - 1;
+            int currentSum = 0;
 
-            while (left < right)
+            for (int right = 0; right < nums.Length; right++)
             {
-                int width = right - left;
-                maxArea = Math.Max(maxArea, Math.Min(height[left], height[right]) * width);
-                if (height[left] <= height[right])
+                currentSum += nums[right];
+
+                while (currentSum >= target)
                 {
+                    minLength = Math.Min(minLength, right - left + 1);
+                    currentSum -= nums[left];
                     left++;
                 }
-                else
-                {
-                    right--;
-                }
             }
-            return maxArea;
+            return minLength == int.MaxValue ? 0 : minLength;
         }
     }
 }
