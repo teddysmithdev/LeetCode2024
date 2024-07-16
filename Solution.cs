@@ -7,40 +7,30 @@ using System.Threading.Tasks;
 
 namespace LeetCode2024
 {
-    public class ListNode
-    {
-        public int val;
-        public ListNode next;
-        public ListNode(int val = 0, ListNode next = null)
-        {
-            this.val = val;
-            this.next = next;
-        }
-    }
     public class Solution
     {
-        public ListNode AddTwoNumbers(ListNode l1, ListNode l2)
+        public int LengthOfLongestSubstring(string s)
         {
-            ListNode result = new();
-            ListNode head = result;
-            int sum = 0;
-            while (l1 != null || l2 != null || sum > 0)
+            int left = 0;
+            int right = 0;
+            int maxLength = 0;
+            HashSet<char> charSet = new();
+
+            while (right < s.Length)
             {
-                if (l1 != null)
+                if (!charSet.Contains(s[right]))
                 {
-                    sum += l1.val;
-                    l1 = l1.next;
+                    charSet.Add(s[right]);
+                    right++;
+                    maxLength = Math.Max(maxLength, right - left);
                 }
-                if (l2 != null)
+                else
                 {
-                    sum += l2.val;
-                    l2 = l2.next;
+                    charSet.Remove(s[left]);
+                    left++;
                 }
-                result.next = new ListNode(sum % 10);
-                sum /= 10;
-                result = result.next;
             }
-            return head.next;
+            return maxLength;
         }
     }
 }
