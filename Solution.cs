@@ -9,28 +9,49 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public int LengthOfLongestSubstring(string s)
+        private Dictionary<char, int> MakeCountMap(string s)
         {
-            int left = 0;
-            int right = 0;
-            int maxLength = 0;
-            HashSet<char> charSet = new();
-
-            while (right < s.Length)
+            Dictionary<char, int> counts = new();
+            foreach (char c in s)
             {
-                if (!charSet.Contains(s[right]))
+                if (counts.ContainsKey(c))
                 {
-                    charSet.Add(s[right]);
-                    right++;
-                    maxLength = Math.Max(maxLength, right - left);
+                    counts[c]++;
                 }
                 else
                 {
-                    charSet.Remove(s[left]);
-                    left++;
+                    counts[c] = 1;
                 }
             }
-            return maxLength;
+            return counts;
+        }
+
+        public bool CanConstruct(string ransomNote, string magazine)
+        {
+            if (ransomNote.Length > magazine.Length)
+            {
+                return false;
+            }
+
+            Dictionary<char, int> magazineCounts = MakeCountMap(magazine);
+
+            foreach (char c in ransomNote)
+            {
+                if (magazineCounts.TryGetValue(c, out int countInMagazine))
+                {
+                    if (countInMagazine == 0)
+                    {
+                        return false;
+                    }
+
+                    magazineCounts[c] = countInMagazine - 1;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }
