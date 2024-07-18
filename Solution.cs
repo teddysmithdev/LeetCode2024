@@ -9,23 +9,28 @@ namespace LeetCode2024
 {
     public class Solution
     {
-        public void Merge(int[] nums1, int m, int[] nums2, int n)
+        public int[] TwoSum(int[] numbers, int target)
         {
-            int p1 = m - 1;
-            int p2 = n - 1;
-            int i = m + n - 1;
+            int low = 0;
+            int high = numbers.Length - 1;
 
-            while (p2 >= 0)
+            while (low < high)
             {
-                if (p1 >= 0 && nums1[p1] > nums2[p2])
+                int sum = numbers[low] + numbers[high];
+                if (sum == target)
                 {
-                    nums1[i--] = nums1[p1--];
+                    return new int[] { low + 1, high + 1 };
+                }
+                else if (sum < target)
+                {
+                    low++;
                 }
                 else
                 {
-                    nums1[i--] = nums2[p2--];
+                    high--;
                 }
             }
+            return new int[] { -1, -1 };
         }
     }
 }
